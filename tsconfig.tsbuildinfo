@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/types/index.ts","./api/appointments/conflict.test.ts","./api/appointments/conflict.ts","./api/billing/money.test.ts","./api/billing/money.ts","./api/diagnosis/matcher.test.ts","./api/diagnosis/matcher.ts","./api/lib/auth.test.ts","./api/lib/auth.ts","./api/lib/http.test.ts","./api/lib/http.ts","./tests/setup.ts"],"version":"5.9.3"}

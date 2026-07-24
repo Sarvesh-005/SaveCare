@@ -39,7 +39,9 @@ export function verifyAuth(req: VercelRequest): { userId: string; role: Role } |
   return verifyToken(getTokenFromReq(req));
 }
 
-export function requireRole(roles: Role[]): (user: { role: Role } | null) => boolean {
+export type AuthUser = { userId: string; role: Role };
+
+export function requireRole(roles: Role[]): (user: AuthUser | null) => boolean {
   return (user) => !!user && roles.includes(user.role);
 }
 
