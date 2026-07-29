@@ -1,4 +1,4 @@
-import { Patient, Doctor } from '../src/types';
+import { Patient, Doctor } from '../types';
 
 export const patients: Patient[] = [
   { id: 'p1', name: 'Asha Rao', date_of_birth: '1990-05-12', gender: 'female', phone: '9876543210', email: 'asha@example.com', address: 'Mumbai', blood_group: 'B+', allergies: 'None', emergency_contact: 'Rao:9876501111', created_at: new Date().toISOString(), created_by: 'seed' },
