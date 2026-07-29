@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { doctors as initialDoctors } from '../data/mock';
 import { Doctor } from '../types';
 import * as api from '../api/doctors';

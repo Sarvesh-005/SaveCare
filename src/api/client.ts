@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 async function request(path: string, init: RequestInit = {}) {

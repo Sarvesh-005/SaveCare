@@ -1,4 +1,3 @@
-import React from 'react';
 import { patients, doctors, appointments } from '../data/mock';
 
 export default function Dashboard() {

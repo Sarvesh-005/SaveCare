@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Patient } from '../types';
 import { patients as initialPatients } from '../data/mock';
 import * as api from '../api/patients';
