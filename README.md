@@ -1,109 +1,88 @@
-# CareSave HMS
+# SaveCare — Hospital Management System
 
-A full-stack Hospital Management System demo: Patients, Doctors, Appointments, Medical Records, Billing, and a rule-based AI Diagnosis assistant. Built with React + Vercel serverless functions + Postgres.
+A modern, full-stack Hospital Management System built with React, Node.js, Express, and MongoDB. Includes 6 operational modules and a rule-based AI Diagnosis Assistant.
 
-> ⚠️ **Not for clinical use.** This is a demo/portfolio project. It is not HIPAA-compliant, carries no BAA, and the diagnosis assistant is a rule-based screening tool, not a medical diagnosis. Do not use with real patient data.
+## Features & Modules
 
-## Stack
-- **Frontend:** React 18 + Vite + TypeScript, React Router
-- **Backend:** Vercel serverless `/api`, Neon Postgres
-- **Auth:** JWT in httpOnly cookies, bcryptjs
-- **AI Diagnosis:** Rule-based symptom matcher (offline, deterministic)
+- 📊 **Dashboard** — Live KPIs (total patients, active doctors, today's appointments, pending revenue), 6-month revenue area chart, and quick action shortcuts.
+- 👥 **Patients** — Full patient management with demographics, blood type badges, allergy tags, emergency contacts, search/filter, and modal workflows.
+- 🩺 **Doctors** — Directory of medical specialists, specialty color tags, patient appointment counts, quick availability toggles, and detailed profiles.
+- 📅 **Appointments** — Book, reschedule, complete, or cancel appointments. Dynamic patient-doctor linking with status management.
+- 📁 **Medical Records** — Patient-centric medical history cards displaying symptoms, prescriptions, vital signs, lab results, and clinical notes.
+- 💳 **Billing** — Dynamic invoice creation with multi-line items, live tax calculation, status tracking (Paid, Pending, Overdue), and revenue aggregation.
+- 🤖 **AI Diagnosis Assistant** — Rule-based symptom analysis matching 85+ symptoms against 20+ clinical conditions. Outputs confidence %, severity tags, recommended tests, specialist routing, and direct save to patient records.
+- 🌓 **Dual Dark / Light Mode** — Seamless theme toggle with persistent state across sessions.
 
-## Local Dev
+---
 
-### Quick Start (Frontend Only)
+## Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React 18, Vite 5, React Router 6, Recharts, React Icons |
+| **Backend** | Node.js, Express 4, Mongoose 8 |
+| **Database** | MongoDB (local or MongoDB Atlas) |
+| **Styling** | Vanilla CSS (CSS Custom Properties design system) |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js**: v18.0.0 or higher
+- **MongoDB**: Running locally on `mongodb://localhost:27017` (or set custom URI in `server/.env`)
+
+### 1. Install Server Dependencies & Seed Data
+
 ```bash
+cd server
 npm install
+node seed.js   # Populates doctors, patients, appointments, records & invoices
+```
+
+### 2. Install Client Dependencies
+
+```bash
+cd ../client
+npm install
+```
+
+### 3. Run the Application
+
+Start the Express backend (Port 5000):
+```bash
+# In savecare/server
 npm run dev
-# Open http://localhost:5173
 ```
 
-### Full Stack Setup (with Backend)
-1. Install Vercel CLI globally:
-   ```bash
-   npm install -g vercel
-   ```
-
-2. Create a Neon or local Postgres database
-
-3. Create `.env` file (copy from `.env.example`):
-   ```
-   DATABASE_URL=postgres://user:pass@host/db
-   JWT_SECRET=your-secret-key-here
-   ```
-
-4. Set up the database (future: create scripts/schema.sql and scripts/migrate.ts):
-   ```bash
-   npm run db:migrate
-   npm run db:seed
-   ```
-
-5. Run frontend + backend:
-   ```bash
-   npm run dev          # Frontend (Vite on :5173)
-   npm run dev:api      # Backend (Vercel functions on :3000) [separate terminal]
-   ```
-
-**For development without a database:** The frontend-only dev server runs at http://localhost:5173 and will gracefully handle API errors, showing mock loading/error states.
-
-## Demo Logins
-| Role | Email | Password |
-|---|---|---|
-| Admin | admin@care.save | care-admin |
-| Doctor | doctor@care.save | care-doctor |
-| Receptionist | reception@care.save | care-reception |
-
-## Deploy to Vercel
-1. Push to GitHub; import the repo in Vercel.
-2. Add env vars `DATABASE_URL`, `JWT_SECRET` (production + preview).
-3. Run the DB migration + seed once against production Postgres: `npm run db:migrate` and `npm run db:seed` (point `.env` at the prod DB).
-4. Vercel builds `vite build` and serves `/api/*` as serverless functions automatically.
-
-## Tests
-`npm test` — Vitest. Covers auth, HTTP helpers, appointment conflict check, money helpers, and diagnosis matcher.
-
-## Features
-- **Patients:** Full CRUD + search
-- **Doctors:** Management + appointment scheduling
-- **Appointments:** Conflict detection (±30 min window)
-- **Medical Records:** Clinical notes with vitals
-- **Billing:** Invoices, line items, payment tracking
-- **AI Diagnosis:** Rule-based symptom matcher with disclaimer
-- **Dashboard:** KPIs, charts, recent activity
-- **Role-based access:** Admin, Doctor, Receptionist with scoped UI + API enforcement
-
-## Project Structure
-```
-hospital-management/
-├─ api/
-│  ├─ auth/              # login, logout, me
-│  ├─ patients/          # CRUD
-│  ├─ doctors/           # CRUD
-│  ├─ appointments/      # CRUD + conflict check
-│  ├─ records/           # CRUD (no delete)
-│  ├─ billing/           # CRUD + pay endpoint
-│  ├─ diagnosis/analyze  # symptom matcher
-│  ├─ stats/             # dashboard KPIs
-│  └─ lib/               # db, auth, http helpers
-├─ src/
-│  ├─ modules/           # feature-sliced (patients, doctors, etc.)
-│  ├─ components/        # shared UI (DataTable, Modal, Form, charts)
-│  ├─ api/               # typed fetch client
-│  ├─ context/           # Auth, Toast providers
-│  ├─ lib/               # money, date helpers
-│  └─ types/             # shared TS interfaces
-├─ scripts/
-│  ├─ schema.sql         # DB schema
-│  ├─ migrate.ts         # apply schema
-│  └─ seed.ts            # demo data
+Start the Vite frontend (Port 5173):
+```bash
+# In savecare/client
+npm run dev
 ```
 
-## Non-Goals (YAGNI)
-- Refresh tokens
-- Audit logging
-- Real LLM diagnosis
-- File upload
-- SMS/email notifications
-- Multi-clinic support
-- HIPAA/BAA compliance
+Open your browser at **`http://localhost:5173`**.
+
+---
+
+## API Endpoints Reference
+
+| Module | Method | Path | Description |
+|---|---|---|---|
+| **Health** | GET | `/api/health` | Server status check |
+| **Patients** | GET | `/api/patients` | List patients (search & filter) |
+| | POST | `/api/patients` | Register new patient |
+| | PUT | `/api/patients/:id` | Update patient record |
+| | DELETE | `/api/patients/:id` | Soft-deactivate patient |
+| **Doctors** | GET | `/api/doctors` | List doctors |
+| | POST | `/api/doctors` | Add doctor |
+| | PUT | `/api/doctors/:id` | Update doctor / availability |
+| **Appointments** | GET | `/api/appointments` | List appointments |
+| | POST | `/api/appointments` | Book appointment |
+| | PUT | `/api/appointments/:id` | Reschedule / status update |
+| **Records** | GET | `/api/records` | List medical records |
+| | POST | `/api/records` | Add medical record |
+| **Billing** | GET | `/api/billing` | List invoices |
+| | POST | `/api/billing` | Generate invoice |
+| | PUT | `/api/billing/:id` | Update payment status |
